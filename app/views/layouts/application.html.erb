@@ -29,6 +29,8 @@
             <%= link_to "Cart: #{cart.total_items}", '/cart', class: 'nav-item nav-link' if current_user.default? %>
             <%= link_to 'Profile','/profile', class: 'nav-item nav-link' if current_user.default? %>
             <%= link_to 'Dashboard','/merchant/dashboard', class: 'nav-item nav-link' if current_user.merchant? %>
+            <%= link_to 'Coupons','/merchant/coupons', class: 'nav-item nav-link' if current_user.merchant? %>
+            <%= link_to 'Coupons','/admin/coupons', class: 'nav-item nav-link' if current_user.admin? %>
             <%= link_to 'Dashboard','/admin/dashboard', class: 'nav-item nav-link' if current_user.admin? %>
             <%= link_to 'Users','/admin/users', class: 'nav-item nav-link' if current_user.admin? %>
             <%= link_to 'Log Out','/logout', method: :delete, class: 'nav-item nav-link' %>
