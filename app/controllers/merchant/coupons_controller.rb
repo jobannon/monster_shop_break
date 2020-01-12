@@ -4,11 +4,11 @@ class Merchant::CouponsController < ApplicationController
   end 
 
   def create 
-    binding.pry
+    merchant = Merchant.find(current_user.merchant_id)
+    merchant.coupons.create!(coupon_params)
   end
 
   def new
-    binding.pry
   end
 
   def show
