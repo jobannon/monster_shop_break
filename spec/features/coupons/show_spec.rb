@@ -5,10 +5,10 @@ RSpec.describe "as a merchant user" do
     before(:each) do 
       @target = Merchant.create!(name: "target", address: "100 some drive", city: "denver", state: "co", zip: 80023)
       @coupon_1 = Coupon.create!(name: "Summer Saver", coupon_code: "sum-save", percentage_off: 10, merchant_id: @target.id)
-      @coupon_2 = Coupon.create!(name: "Winter Saver", coupon_code: "winter-save", percentage_off: 50, merchant_id: @target.id)
       @merchant_user = User.create!(name: "show merch", address: "show", city: "denver", state: "co", zip: 80023, role: 2, email: "joe3@ge.com", password: "password")
 
       @target.users << @merchant_user 
+      
       #log in as a merch
       visit login_path
 
@@ -18,18 +18,14 @@ RSpec.describe "as a merchant user" do
       click_button 'Log In'
     end 
 
-    it "shows me a button to delete the coupon" do 
+    it "shows me the coupon and its attributes" do 
       visit merchant_coupon_path(@coupon_1)
 
       within "#coupon_individual-#{@coupon_1.id}" do 
-        click_button "Delete Coupon"
-      end
-
-      expect(page).not_to have_content(@coupon_1.name)
-    end 
-
-    it "shows me a button to edit the coupon" do 
-
-    end 
+        expect(page).to have_content(@coupon_1.name)
+        expect(page).to have_content(@coupon_1.percentage_off)
+        expect(page).to have_content(@coupon_1.coupon_code)
+      end 
+    end
   end
 end
