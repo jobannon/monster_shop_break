@@ -68,7 +68,8 @@ Rails.application.routes.draw do
     get '/orders/:id', to: 'orders#show'
     get '/items', to: 'items#index'
     patch '/items/:id', to: 'items#update'
-    get '/coupons/', to: 'coupons#index'
+    
+    resources :coupons, only: [:index, :show] 
   end
 
   Rails.application.routes.draw do
