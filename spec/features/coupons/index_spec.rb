@@ -27,16 +27,28 @@ RSpec.describe "as a merchant user" do
 
       click_link "Coupons" 
 
-      expect(page).to have_content(@coupon_1.name)
-      expect(page).to have_content(@coupon_1.coupon_code)
-      expect(page).to have_content(@coupon_1.percentage_off)
+      within "#coupon-#{@coupon_1.id}" do 
+        expect(page).to have_content(@coupon_1.name)
+        expect(page).to have_content(@coupon_1.coupon_code)
+        expect(page).to have_content(@coupon_1.percentage_off)
+      end
 
-      expect(page).to have_content(@coupon_2.name)
-      expect(page).to have_content(@coupon_2.coupon_code)
-      expect(page).to have_content(@coupon_2.percentage_off)
+      within "#coupon-#{@coupon_2.id}" do 
+        expect(page).to have_content(@coupon_2.name)
+        expect(page).to have_content(@coupon_2.coupon_code)
+        expect(page).to have_content(@coupon_2.percentage_off)
+      end
+    end
 
-      it "also allows the coupon name to be a link to the coupon show page"
-      
+    it "also allows the coupon name to be a link to the coupon show page" do 
+      visit merchant_dashboard_path
+
+      click_link "Coupons" 
+
+      within "#coupon-#{@coupon_1.id}" do 
+        click_link @coupon_1.name
+        expect(current_path).to eq(merchant_coupon_path(@coupon_1)) 
+      end
     end
   end
 end
