@@ -69,7 +69,7 @@ Rails.application.routes.draw do
     get '/items', to: 'items#index'
     patch '/items/:id', to: 'items#update'
     
-    resources :coupons, only: [:index, :show] 
+    resources :coupons, only: [:index, :show, :destroy] 
   end
 
   Rails.application.routes.draw do
