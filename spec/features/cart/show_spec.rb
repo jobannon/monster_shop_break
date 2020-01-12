@@ -90,6 +90,15 @@ RSpec.describe 'Cart show' do
         expect(page).to_not have_content(@coffee.name)
 
       end
+      it "shows me the input box for adding a coupon code 
+      and when I click on that button it:
+      -shows an updated cart with a new discounted subtotal field" do 
+        visit cart_path
+        expect(page).to have_button("Apply Coupon Code")
+
+
+    end
+  end 
     end
   end
 
@@ -105,7 +114,5 @@ RSpec.describe 'Cart show' do
         visit '/cart'
         expect(page).to_not have_link("Empty Cart")
       end
-
     end
   end
-end
