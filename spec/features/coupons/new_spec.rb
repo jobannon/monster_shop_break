@@ -39,7 +39,6 @@ RSpec.describe "as a merchant user" do
       click_button "Create Coupon"
 
       coupon = Coupon.last
-      binding.pry
       expect(coupon.name).to eq(@coupon_1[:name])
       expect(coupon.coupon_code).to eq(@coupon_1[:coupon_code])
       expect(coupon.percentage_off).to eq(@coupon_1[:percentage_off])
