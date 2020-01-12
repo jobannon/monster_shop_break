@@ -1,0 +1,14 @@
+<%= form_tag merchant_coupons_path, method: :post do %>
+  <%= text_field_tag :name %>
+  <%= label_tag :name %>
+
+  <%= text_field_tag :coupon_code %>
+  <%= label_tag :coupon_code %>
+
+  <%= text_field_tag :percentage_off %>
+  <%= label_tag :percentage_off %>
+
+  <%= submit_tag "Create Coupon" %>
+
+<% end %>
+
