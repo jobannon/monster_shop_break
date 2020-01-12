@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe "as a merchant user" do 
   describe "when I visit the the merchant coupons show page" do 
     before(:each) do 
@@ -19,14 +21,15 @@ RSpec.describe "as a merchant user" do
     it "shows me a button to delete the coupon" do 
       visit merchant_coupon_path(@coupon_1)
 
-      within "#coupon-#{@coupon_1.id}" do 
+      within "#coupon_individual-#{@coupon_1.id}" do 
         click_button "Delete Coupon"
       end
 
       expect(page).not_to have_content(@coupon_1.name)
     end 
 
-    xit "shows me a button to edit the coupon" do 
+    it "shows me a button to edit the coupon" do 
+
     end 
   end
 end
