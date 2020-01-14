@@ -44,13 +44,25 @@
     </tr>
   <% end %>
 </table>
+
+<section id="discounted_subtotal">
+  <% if session[:coupon] %>
+    <p>SubTotal(reflecting coupon): <%= number_to_currency(cart.discounted_subtotal(session[:coupon].first["percentage_off"])) %></p>
+  <% else %>
+    <p>SubTotal(reflecting coupon): <%= number_to_currency(cart.discounted_subtotal(1)) %></p>
+  <% end %>
+</section>
+
   <p>Total: <%= number_to_currency(cart.total) %></p>
 
-    <%= form_tag "/cart?coupon_code=coupon_code", method: :patch do  %>
+  <section id="coupon-application">
+    <%# <%= make this into a combo box %1> %>
+    <%= form_tag "/cart/coupon?apply_coupon=yes", method: :patch do  %>
       <%= label_tag :coupon_code %>
       <%= text_field_tag :coupon_code %>
-    <%= submit_tag "Apply Coupon Code" %>
+      <%= submit_tag "Apply Coupon Code" %>
     <% end %>
+  </section>
 
   <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
   <p><%= link_to "Checkout", "/orders/new", method: :get %></p>
