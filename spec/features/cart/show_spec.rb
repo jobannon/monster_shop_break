@@ -6,6 +6,7 @@ RSpec.describe 'Cart show' do
       before(:each) do
         @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
         @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+        @coupon_1 = @meg.coupons.create(name: "10 percent off", coupon_code: "10off", percentage_off: 10)
 
         @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
         @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 25)
@@ -91,16 +92,32 @@ RSpec.describe 'Cart show' do
 
       end
       it "shows me the input box for adding a coupon code 
-      and when I click on that button it:
-      -shows an updated cart with a new discounted subtotal field" do 
+         and when I click on that button it:
+         -shows an updated cart with a new discounted subtotal field" do 
         visit cart_path
+         
         expect(page).to have_button("Apply Coupon Code")
 
+        fill_in :coupon_code, with: @coupon_1.coupon_code
 
-    end
-  end 
-    end
+        within "#coupon-application" do 
+          click_button "Apply Coupon Code"
+        end
+        expect(current_path).to eq(cart_path)
+        
+        #why do I have to do this? 
+        visit cart_path
+
+        expect(current_path).to eq(cart_path)
+
+        # within "#discounted-subtotal" do
+          expect(page).to have_content("SubTotal(reflecting coupon): $109.80")
+        # end
+
+      end
+    end 
   end
+end
 
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
