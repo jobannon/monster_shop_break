@@ -26,6 +26,12 @@ class Cart
     item.price * @contents[item.id.to_s]
   end
 
+  def discounted_subtotal(percentage_off)
+    #need to move session logic out but for now...
+    #why dont we have a cart spec
+    total * (100 - percentage_off) / 100
+  end
+
   def total
     @contents.sum do |item_id,quantity|
       Item.find(item_id).price * quantity
@@ -46,5 +52,8 @@ class Cart
 
   def quantity_zero?(item_id)
     @contents[item_id] == 0
+  end
+
+  def apply_coupon(coupon)
   end
 end

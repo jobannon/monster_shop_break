@@ -1,11 +1,12 @@
-class Merchant::CouponsController < ApplicationController
+class Merchant::CouponsController < Merchant::BaseController
   def index
-    @merchant_coupons = Coupon.where(merchant_id: current_user.merchant_id) 
+    @merchant_coupons = Coupon.where(merchant_id: current_user.merchant_id)
   end 
 
   def create 
     merchant = Merchant.find(current_user.merchant_id)
-    merchant.coupons.create!(coupon_params)
+    merchant.coupons.create(coupon_params)
+    redirect_to merchant_coupons_path 
   end
 
   def new
@@ -16,7 +17,11 @@ class Merchant::CouponsController < ApplicationController
   end
 
   def destroy
-    Coupon.delete(params[:id])
+    # if used on an order... then 
+    # flash[:notice] = Cannot delete this as it has been used on an order
+    # else (delete this)
+      Coupon.delete(params[:id])
+    # end
     redirect_to merchant_coupons_path
   end
 

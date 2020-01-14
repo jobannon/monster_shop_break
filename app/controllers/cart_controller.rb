@@ -30,4 +30,10 @@ class CartController < ApplicationController
     end
     redirect_to "/cart"
   end
+
+  def apply_coupon
+    session[:coupon] = Coupon.where(coupon_code: params[:coupon_code])
+    redirect_to "/cart"
+  end 
+
 end
