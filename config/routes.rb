@@ -17,7 +17,9 @@ Rails.application.routes.draw do
   resources :reviews, only: [:edit, :update, :destroy]
 
   post "/cart/:item_id", to: "cart#add_item"
+  patch "/cart/coupon", to: "cart#apply_coupon"
   patch "/cart", to: "cart#increment_decrement"
+  patch "/cart/coupon", to: "cart#apply_coupon"
   get "/cart", to: "cart#show"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
@@ -60,6 +62,8 @@ Rails.application.routes.draw do
     get '/users/:id/edit-pw', to: 'user_password#edit'
     patch '/users/:id/edit-pw', to: 'user_password#update'
   end
+
+  # get "/merchants/:merchant_id/coupons", to: "coupons#index"
 
   namespace :merchant do
     get '/dashboard', to: 'dashboard#index'

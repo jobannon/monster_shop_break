@@ -10,19 +10,20 @@ User.destroy_all
 Order.destroy_all
 Merchant.destroy_all
 Item.destroy_all
+Coupon.destroy_all
 #merchants
 # bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 # dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
-merchants = FactoryBot.create_list(:merchant, 12)
+merchants = FactoryBot.create_list(:merchant, 5)
 items = Array.new
 merchants.each do |merchant|
   items << FactoryBot.create_list(:item, 30, merchant: merchant)
 end
 items.flatten!
-users = FactoryBot.create_list(:random_user, 100)
+users = FactoryBot.create_list(:random_user, 5)
 
 # create some orders
-orders = FactoryBot.create_list(:order, 15)
+orders = FactoryBot.create_list(:order, 5)
 orders.each do |order|
   order_items = items.sample(3)
   order_items.each do |item|
@@ -31,7 +32,7 @@ orders.each do |order|
 end
 
 # create some fufilled orders
-orders = FactoryBot.create_list(:order, 15)
+orders = FactoryBot.create_list(:order, 5)
 orders.each do |order|
   order_items = items.sample(3)
   order_items.each do |item|
@@ -40,13 +41,14 @@ orders.each do |order|
 end
 
 # create some packaged orders
-orders = FactoryBot.create_list(:order, 15, status: 1)
+orders = FactoryBot.create_list(:order, 5, status: 1)
 orders.each do |order|
   order_items = items.sample(3)
   order_items.each do |item|
     ItemOrder.create(order_id: order.id, item_id: item.id, price: item.price, quantity: rand(item.inventory), fulfilled_by_merchant: true)
   end
 end
+
 
 admin = User.create(
   name: 'admin',
@@ -59,7 +61,16 @@ admin = User.create(
   role: 1
 )
 merchant_test = FactoryBot.create(:merchant)
-merchant= User.create(
+
+target = Merchant.create(
+    name: "Target",
+    address: "100 target way",
+    city: "balitmore",
+    state: "md",
+    zip: 80023
+)
+
+merchant= target.users.create(
   name: 'merchant',
   email: 'merchant@merchant.com',
   password: 'password',
@@ -68,7 +79,6 @@ merchant= User.create(
   state: 'CO',
   zip: '80000',
   role: 2,
-  merchant_id: merchants.first.id
 )
 
 regular_user= User.create(
@@ -82,6 +92,7 @@ regular_user= User.create(
   role: 0
 )
 
+coupon_1 = target.coupons.create(name: "10 percent off", percentage_off: 10, coupon_code: "10off")  
 
 #bike_shop items
 # tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
