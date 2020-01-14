@@ -5,7 +5,7 @@
   <%= @coupon.name %>
   <%= @coupon.coupon_code %>
   <%= @coupon.percentage_off %>
-  <%= button_to "Edit Coupon", edit_merchant_coupon_path(@coupon), method: :patch %>
+  <%= button_to "Edit Coupon", edit_merchant_coupon_path(@coupon), method: :get %>
   <%= button_to "Delete Coupon", merchant_coupon_path(@coupon), method: :delete  %>
 
 </section>
