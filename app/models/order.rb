@@ -28,6 +28,10 @@ class Order < ApplicationRecord
     items.where(merchant: merchant).sum("item_orders.quantity")
   end
 
+  def get_coupon_name
+     Coupon.find(coupon_id).name
+  end
+
   def self.custom_sort
     orders = self.all.joins(:user)
     sort_order = ['Packaged','Pending','Shipped','Cancelled']

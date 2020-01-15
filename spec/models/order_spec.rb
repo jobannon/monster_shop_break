@@ -50,6 +50,11 @@ describe Order, type: :model do
     it 'merchant_orders' do
       expect(@order_1.merchant_orders(@brian.id)).to eq([@item_order_2])
     end
+
+    it "get_coupon_name" do 
+      @order_1.coupon = Coupon.create(name: "tester", percentage_off: 10, coupon_code: "test10", merchant_id: @meg.id)
+      expect(@order_1.get_coupon_name).to eq("tester")
+    end
   end
 
   describe 'class methods' do
