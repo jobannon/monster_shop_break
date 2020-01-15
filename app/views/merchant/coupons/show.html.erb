@@ -2,9 +2,9 @@
 
 
 <section id=coupon_individual-<%= @coupon.id %>>
-  <%= @coupon.name %>
-  <%= @coupon.coupon_code %>
-  <%= @coupon.percentage_off %>
+  Coupon Name: <%= @coupon.name %>
+  Coupon Code: <%= @coupon.coupon_code %>
+  Percentage Off: <%= @coupon.percentage_off %>
   <%= button_to "Edit Coupon", edit_merchant_coupon_path(@coupon), method: :get %>
   <%= button_to "Delete Coupon", merchant_coupon_path(@coupon), method: :delete  %>
 

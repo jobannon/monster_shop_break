@@ -35,7 +35,7 @@
               <p><%=quantity%></p>
             <%= button_to '-', "/cart?increment_decrement=decrement&item_id=#{item.id}", method: :patch %>
           </section>
-          <p><%= link_to "Remove", "/cart/#{item.id}", method: :delete %></p>
+          <p><%= link_to "Remove" "/cart/#{item.id}", method: :delete %></p>
         </center>
         </td>
       <td>
@@ -47,9 +47,9 @@
 
 <section id="discounted_subtotal">
   <% if session[:coupon] %>
-    <p>SubTotal(reflecting coupon): <%= number_to_currency(cart.discounted_subtotal(session[:coupon].first["percentage_off"])) %></p>
+    <p>SubTotal(reflecting coupon): <%= number_to_currency(cart.discounted_subtotal(session[:coupon].first["percentage_off"], session[:coupon].first["merchant_id"])) %></p>
   <% else %>
-    <p>SubTotal(reflecting coupon): <%= number_to_currency(cart.discounted_subtotal(1)) %></p>
+    <p>SubTotal(reflecting coupon): <%= number_to_currency(cart.discounted_subtotal(1,0)) %></p>
   <% end %>
 </section>
 

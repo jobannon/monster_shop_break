@@ -56,6 +56,11 @@
 <section id="grandtotal">
   <p>Total: <%=number_to_currency(@order.grandtotal)%></p>
 </section>
+
+<section id="coupon-used">
+  <p> Coupon Used: <%= @order.get_coupon_name if @order.coupon %></p>
+</section>
+
 <section id="datecreated">
   <p> Created At: <%= @order.created_at%></p>
 </section>
