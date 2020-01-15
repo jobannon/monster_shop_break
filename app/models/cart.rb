@@ -34,7 +34,6 @@ class Cart
         Item.find(item_id).price * quantity
       end
     end
-      # special_total(merchant_id, percentage_off) * (100 - percentage_off) / 100
   end
 
   def total

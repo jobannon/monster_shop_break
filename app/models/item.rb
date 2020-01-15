@@ -31,6 +31,10 @@ class Item <ApplicationRecord
     return true if self.active? == false
   end
 
+  def discounted_price 
+
+  end
+
   def self.top_five
     joins(:item_orders).select("items.*, sum(item_orders.quantity) as quantity").group(:id).order("quantity desc").limit(5)
   end
