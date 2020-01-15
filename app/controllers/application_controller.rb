@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :cart, :current_user, :user_redirect
+  helper_method :cart, :current_user, :user_redirect, :coupon
 
   def cart
     @cart ||= Cart.new(session[:cart] ||= Hash.new(0))
@@ -18,5 +18,13 @@ class ApplicationController < ActionController::Base
     else
       redirect_to '/profile'
    end
+  end
+
+  def coupon 
+    if session[:coupon] 
+      @coupon ||= Coupon.find(session[:coupon].first["id"])
+    else
+      @coupon ||= String.new
+    end
   end
 end

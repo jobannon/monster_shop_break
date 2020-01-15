@@ -16,33 +16,16 @@ class OrdersController < ApplicationController
   end
 
   def create
-    if session[:coupon] 
-      applied_coupon = Coupon.find(session[:coupon].first["id"])
-    end
-     
     order = Order.create(order_params)
-    order.coupon = applied_coupon
-    
+    order.coupon = coupon if coupon != "" 
     current_user.orders << order
+
     if order.save
       cart.items.each do |item,quantity|
-        if applied_coupon && (item.merchant_id == order.coupon.merchant.id) 
-          order.item_orders.create({
-            item: item,
-            quantity: quantity,
-            price: (item.price * ( (100 - order.coupon.percentage_off) / 100)) 
-            })
-        else
-          order.item_orders.create({
-            item: item,
-            quantity: quantity,
-            price: item.price 
-            })
-        end
-      end
-      session.delete(:cart)
-      session.delete(:coupon)
-      flash[:success] = 'Order created successfully'
+        add_discounted_item(item, quantity, order)
+        add_reg_item(item, quantity, order)
+      end 
+      cleanup_session
       redirect_to "/profile/orders"
     else
       flash[:notice] = "Please complete address form to create an order."
@@ -64,4 +47,29 @@ class OrdersController < ApplicationController
     params.permit(:name, :address, :city, :state, :zip)
   end
 
+  def cleanup_session
+    session.delete(:cart)
+    session.delete(:coupon)
+    flash[:success] = 'Order created successfully'
+  end
+
+  def add_discounted_item(item, quantity, order)
+    if coupon != "" && (item.merchant_id == order.coupon.merchant.id) 
+      order.item_orders.create({
+        item: item,
+        quantity: quantity,
+        price: (item.price * ( (100 - order.coupon.percentage_off) / 100)) 
+        })
+    end
+  end 
+
+  def add_reg_item(item, quantity, order  )
+    if !(coupon != "" && (item.merchant_id == order.coupon.merchant.id)) 
+      order.item_orders.create({
+      item: item,
+      quantity: quantity,
+      price: item.price 
+      })
+    end
+  end
 end
