@@ -17,11 +17,13 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def destroy
-    # if used on an order... then 
-    # flash[:notice] = Cannot delete this as it has been used on an order
-    # else (delete this)
+    current_coupon = Coupon.find(params[:id])
+    if current_coupon.orders.count > 0
+      flash[:notice] = 'this coupon cannot be deleted'
+    else
       Coupon.delete(params[:id])
-    # end
+      flash[:notice] = 'this coupon was sucessfully be deleted'
+    end
     redirect_to merchant_coupons_path
   end
 
@@ -40,4 +42,5 @@ class Merchant::CouponsController < Merchant::BaseController
     def coupon_params
       params.permit(:name, :coupon_code, :percentage_off)
     end
+
 end 
