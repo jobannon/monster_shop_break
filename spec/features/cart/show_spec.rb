@@ -104,16 +104,25 @@ RSpec.describe 'Cart show' do
           click_button "Apply Coupon Code"
         end
         expect(current_path).to eq(cart_path)
-        
-        #why do I have to do this? 
+
+        within "#discounted_subtotal" do
+          expect(page).to have_content("SubTotal(reflecting coupon): $112")
+        end
+      end
+
+      it "doesn't allow me to apply a non-existant coupon code" do 
         visit cart_path
+         
+        expect(page).to have_button("Apply Coupon Code")
+
+        fill_in :coupon_code, with: "dummy" 
+
+        within "#coupon-application" do 
+          click_button "Apply Coupon Code"
+        end
 
         expect(current_path).to eq(cart_path)
-
-        # within "#discounted-subtotal" do
-          expect(page).to have_content("SubTotal(reflecting coupon): $109.80")
-        # end
-
+        expect(page).to have_content("Please Enter A Valid Coupon")
       end
     end 
   end
