@@ -147,12 +147,16 @@ RSpec.describe("Order Creation") do
 
       new_order = Order.last
 
-
       visit "/orders/#{new_order.id}"
       within "#item-#{@tire.id}" do 
         expect(page).to have_content(90)
       end
-      save_and_open_page
+      
+      within "#coupon-used" do 
+        expect(page).to have_content("10 percent off")
+      end
+      
+
     end
   end
 end

@@ -5,6 +5,7 @@
     <th>Price</th>
     <th>Quantity</th>
     <th>Subtotal</th>
+    <th>Subtotal(discount)</th>
     <th>Sold By</th>
     <th>Inventory</th>
   </tr>
@@ -13,6 +14,13 @@
       <td><h2><%= link_to item.name, "/items/#{item.id}" %></h2></td>
       <td><p><%= number_to_currency(item.price) %></p></td>
       <td><p><%= quantity %></p></td>
+
+      <% if session[:coupon] %>
+        <td><p><%= number_to_currency(cart.discounted_subtotal(session[:coupon].first["percentage_off"], session[:coupon].first["merchant_id"])) %></p><td>
+      <% else %>
+        <td><p><%= number_to_currency(cart.subtotal(item)) %></p><td>
+      <% end %>
+        
       <td><p><%= number_to_currency(cart.subtotal(item)) %></p><td>
       <td><p><%= link_to item.merchant.name, "/merchants/#{item.merchant_id}" %></p></td>
       <td><p><%= item.inventory %> in stock</p></td>
