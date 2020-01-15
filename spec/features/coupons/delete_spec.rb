@@ -25,6 +25,7 @@ RSpec.describe "as a merchant user" do
         click_button "Delete Coupon"
       end
 
+      expect(page).to have_content('This coupon was sucessfully be deleted')
       expect(page).not_to have_content(@coupon_1.name)
       expect(page).to have_content(@coupon_2.name)
     end 
@@ -44,6 +45,7 @@ RSpec.describe "as a merchant user" do
         click_button "Delete Coupon"
       end
 
+      expect(page).to have_content('This coupon cannot be deleted')
       expect(page).to have_content(@coupon_1.name)
       expect(page).to have_content(@coupon_2.name)
     end 
