@@ -1,11 +1,22 @@
-<% @merchant_coupons.each do |coupon| %>
-  <section id="coupon-<%= coupon.id %>">
-    <%= link_to coupon.name, merchant_coupon_path(coupon) %>
-    <%= coupon.coupon_code %>
-    <%= coupon.percentage_off %>
-  </section>
-<% end %>
-
 <section id="coupon_actions">
   <%= button_to "Create A New Coupon", new_merchant_coupon_path, method: :get %>
 </section>
+ 
+<table>
+  <tr>
+    <th>Coupon Name </th>
+    <th>Coupon Code</th>
+    <th>Percentage Off</th>
+  </tr>
+  <% @merchant_coupons.each do |coupon| %>
+    <section id="coupon-<%= coupon.id %>">
+
+        <tr>
+          <td><%= link_to coupon.name, merchant_coupon_path(coupon) %></td>
+          <td><%= coupon.coupon_code %></td>
+          <td><%= coupon.percentage_off %></td>
+        </tr>
+    </section>
+  <% end %>
+</table>
+
