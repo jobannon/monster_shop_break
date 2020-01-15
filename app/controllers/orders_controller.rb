@@ -16,17 +16,32 @@ class OrdersController < ApplicationController
   end
 
   def create
+    if session[:coupon] 
+      applied_coupon = Coupon.find(session[:coupon].first["id"])
+    end
+     
     order = Order.create(order_params)
+    order.coupon = applied_coupon
+    
     current_user.orders << order
     if order.save
       cart.items.each do |item,quantity|
-        order.item_orders.create({
-          item: item,
-          quantity: quantity,
-          price: item.price
-          })
+        if applied_coupon && (item.merchant_id == order.coupon.merchant.id) 
+          order.item_orders.create({
+            item: item,
+            quantity: quantity,
+            price: (item.price * ( (100 - order.coupon.percentage_off) / 100)) 
+            })
+        else
+          order.item_orders.create({
+            item: item,
+            quantity: quantity,
+            price: item.price 
+            })
+        end
       end
       session.delete(:cart)
+      session.delete(:coupon)
       flash[:success] = 'Order created successfully'
       redirect_to "/profile/orders"
     else
