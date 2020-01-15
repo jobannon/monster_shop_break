@@ -32,7 +32,16 @@ class CartController < ApplicationController
   end
 
   def apply_coupon
-    session[:coupon] = Coupon.where(coupon_code: params[:coupon_code])
+    if Coupon.where(coupon_code: params[:coupon_code]).count > 0 #if this exists
+      this_coup = Coupon.where(coupon_code: params[:coupon_code])
+      cart.items.each do |item| 
+        if item.first.merchant_id == this_coup.first.merchant_id   
+          session[:coupon] = Coupon.where(coupon_code: params[:coupon_code])
+        end
+      end
+    else
+      flash[:notice] = "Please Enter A Valid Coupon"
+    end
     redirect_to "/cart"
   end 
 
