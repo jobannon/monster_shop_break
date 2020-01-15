@@ -37,10 +37,15 @@ RSpec.describe "as a merchant user" do
       pencil = mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
 
       user = User.create!(name: "jess", address: "jess way", city: "denver", state: "co", zip: 80023, role: 0, email: "jess@j.com", password: "password")
-      user.orders.create(name: "bob", address: "1 way", city: "denver", state: "md", zip: 22235)
+      user.orders.create!(name: "bob", address: "1 way", city: "denver", state: "md", zip: 22235, coupon_id: @coupon_1.id )
       holder = user.orders[0].item_orders.create!({item: paper, quantity: 1, price: 10 })
-      binding.pry
       
+      within "#coupon_individual-#{@coupon_1.id}" do 
+        click_button "Delete Coupon"
+      end
+
+      expect(page).to have_content(@coupon_1.name)
+      expect(page).to have_content(@coupon_2.name)
     end 
   end
 end 
