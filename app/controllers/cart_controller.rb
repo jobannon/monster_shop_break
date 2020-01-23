@@ -31,6 +31,7 @@ class CartController < ApplicationController
     redirect_to "/cart"
   end
 
+  #break this up into a gen. coupon controller ... cart is for items and coupons for the discount
   def apply_coupon
     if Coupon.where(coupon_code: params[:coupon_code]).count > 0 #if this exists
       this_coup = Coupon.where(coupon_code: params[:coupon_code])

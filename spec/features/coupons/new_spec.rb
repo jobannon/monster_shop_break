@@ -40,5 +40,82 @@ RSpec.describe "as a merchant user" do
       expect(coupon.coupon_code).to eq(@coupon_1[:coupon_code])
       expect(coupon.percentage_off).to eq(@coupon_1[:percentage_off])
     end
+
+    it "shows me an error message when I try and make the discount greater than 100 percent" do 
+      visit merchant_dashboard_path
+
+      click_link "Coupons"
+      expect(current_path).to eq(merchant_coupons_path)
+
+      within "#coupon_actions" do 
+        click_button "Create A New Coupon"
+      end
+      expect(current_path).to eq(new_merchant_coupon_path)
+
+      fill_in :name, with: @coupon_1[:name]
+      fill_in :coupon_code, with: @coupon_1[:coupon_code]
+      fill_in :percentage_off, with: 102
+
+      click_button "Create Coupon"
+
+      expect(page).to have_content("Percentage off must be less than 100")
+
+    end
+
+    it "doens't allow for a duplicate value" do 
+      visit merchant_dashboard_path
+
+      click_link "Coupons"
+      expect(current_path).to eq(merchant_coupons_path)
+
+      within "#coupon_actions" do 
+        click_button "Create A New Coupon"
+      end
+      expect(current_path).to eq(new_merchant_coupon_path)
+
+      fill_in :name, with: @coupon_1[:name]
+      fill_in :coupon_code, with: @coupon_1[:coupon_code]
+      fill_in :percentage_off, with: 99 
+
+      click_button "Create Coupon"
+
+      visit merchant_dashboard_path
+
+      click_link "Coupons"
+      expect(current_path).to eq(merchant_coupons_path)
+
+      within "#coupon_actions" do 
+        click_button "Create A New Coupon"
+      end
+
+      fill_in :name, with: @coupon_1[:name]
+      fill_in :coupon_code, with: @coupon_1[:coupon_code]
+      fill_in :percentage_off, with: 99
+
+      click_button "Create Coupon"
+
+      expect(page).to have_content("Name has already been taken and Coupon code has already been taken")
+
+    end
+
+    it "doesn't allow for a negative value" do 
+      visit merchant_dashboard_path
+
+      click_link "Coupons"
+      expect(current_path).to eq(merchant_coupons_path)
+
+      within "#coupon_actions" do 
+        click_button "Create A New Coupon"
+      end
+      expect(current_path).to eq(new_merchant_coupon_path)
+
+      fill_in :name, with: @coupon_1[:name]
+      fill_in :coupon_code, with: @coupon_1[:coupon_code]
+      fill_in :percentage_off, with: -10
+
+      click_button "Create Coupon"
+
+      expect(page).to have_content("Percentage off must be greater than 0")
+    end 
   end
 end
