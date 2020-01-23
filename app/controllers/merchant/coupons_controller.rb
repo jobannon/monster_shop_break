@@ -6,7 +6,7 @@ class Merchant::CouponsController < Merchant::BaseController
   def create 
     merchant = Merchant.find(current_user.merchant_id)
     # merchant.coupons.create(coupon_params)
-    added_element = merchant.coupons.new(coupon_params)
+    added_element = merchant.coupons.new(coupon_params) # may call added coupon instead of added_element
     if added_element.save 
       flash[:notice] = "Coupon Added" 
       redirect_to merchant_coupons_path 
@@ -26,7 +26,7 @@ class Merchant::CouponsController < Merchant::BaseController
 
   def destroy
     current_coupon = Coupon.find(params[:id])
-    if current_coupon.orders.count > 0
+    if current_coupon.orders.count > 0 #model method for this j
       flash[:notice] = 'This coupon cannot be deleted'
     else
       Coupon.delete(params[:id])
@@ -41,7 +41,7 @@ class Merchant::CouponsController < Merchant::BaseController
 
   def update
     coupon = Coupon.find(params[:id])
-    coupon.update!(coupon_params)
+    coupon.update(coupon_params)
     redirect_to merchant_coupons_path
   end
 
