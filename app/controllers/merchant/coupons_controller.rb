@@ -40,9 +40,14 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def update
-    coupon = Coupon.find(params[:id])
-    coupon.update!(coupon_params)
-    redirect_to merchant_coupons_path
+    @coupon = Coupon.find(params[:id])
+    @coupon.update(coupon_params)
+    if @coupon.save        
+      flash[:notice] = "Coupon updated"
+    else
+      flash[:notice] = @coupon.errors.full_messages.to_sentence + " " + "Please try again"
+    end 
+      redirect_to merchant_coupons_path and return if current_user && current_user.merchant?
   end
 
   private
