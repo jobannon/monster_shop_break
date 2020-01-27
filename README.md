@@ -1,4 +1,4 @@
-<img src="/app/assets/images/coverage-100-green.svg">
+<img src="/app/assets/images/coverage-100-green.svg" sanitize=1 >
 
 # Welcome to CoffeeTown!   
 Rails project 
@@ -7,7 +7,8 @@ Rails project
 
 ### Rails
 * Implement partials to DRY code
-* Implement professional grade user authenication and namespacing thru sessions, Bcrypt, strong paramsand filters
+* Implement professional grade user authentication and namespacing thru
+  sessions, Bcrypt, strong params and filters
 
 ### ActiveRecord 
 * Demonstrate the use of ActiveRecord query calls to populate monolith with appropriate data 
@@ -23,12 +24,12 @@ Rails project
 * Josh O - @jtobannon
 
 ## Schema 
-<img width="954" alt="Screen Shot 2020-01-09 at 7 23 04 PM" src="https://user-images.githubusercontent.com/16090626/72127857-23c75680-332e-11ea-9530-73dfa3fae2b4.png">
+  <img width="954" alt="Screen Shot 2020-01-09 at 7 23 04 PM" src="https://user-images.githubusercontent.com/16090626/72127857-23c75680-332e-11ea-9530-73dfa3fae2b4.png">
 
 ## Setup
 
-1. Typical Rals setup.  
-  * bundle install (occassionally removing the Gemfile.lock and running bundle may be most effective)
+1. Typical Rails setup.  
+  * bundle install (occasionally removing the Gemfile.lock and running bundle may be most effective)
   * rails db:{drop, migrate, seed, create}
   * rake rails to run the test suite
   * rails s to run the server
@@ -37,29 +38,27 @@ Rails project
   * https://jpmd-monster-shop.herokuapp.com/
 
 3. Install software dependencies
-- Rails 5.1.x
-- PostgreSQL
-- 'bcrypt' (authenication)
+  - Rails 5.1.x
+  - PostgreSQL
+  - 'bcrypt' (authentication)
 
 ## Highlights
 
 1. Implement FactoryBot to test development
-2. 100% model and feature test coverave via simplecov.
+2. 100% model and feature test coverage via simplecov.
 
-## User Roles available in thie ecommerce solution
+## User Roles available in this e-commerce solution
 
 1. Visitor - this type of user is anonymously browsing our site and is not logged in
 1. Regular User - this user is registered and logged in to the application while performing their work; can place items in a cart and create an order
 1. Merchant Employee - this user works for a merchant. They can fulfill orders on behalf of their merchant. They also have the same permissions as a regular user (adding items to a cart and checking out)
-3. Merchant Admin - this user works for a merchant, and has additional capabilities than regular employees, such as changing merchant info.
-3. Admin User - a registered user who has "superuser" access to all areas of the application; user is logged in to perform their work
+1. Admin User - a registered user who has "superuser" access to all areas of
+   the application; user is logged in to perform their work
 
-## Order Progression in thie ecommerce solution
+## Order Progression in this e-commerce solution
 
 1. 'pending' means a user has placed items in a cart and "checked out" to create an order, merchants may or may not have fulfilled any items yet
 2. 'packaged' means all merchants have fulfilled their items for the order, and has been packaged and ready to ship
 3. 'shipped' means an admin has 'shipped' a package and can no longer be cancelled by a user
 4. 'cancelled' - only 'pending' and 'packaged' orders can be cancelled
 
-## Original Learning Specification
-*  
