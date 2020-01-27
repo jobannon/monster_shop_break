@@ -21,6 +21,8 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     session[:cart] = nil
+    session[:coupon] = nil
+
     redirect_to '/'
     flash[:happy] = 'Goodbye!'
   end
