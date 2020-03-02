@@ -1,8 +1,8 @@
-<img src="/app/assets/images/coverage-100-green.svg" sanitize=1 >
-
+![1D2E9EB9-84EE-4825-91C3-AAAE3BA19F07_1_105_c](https://user-images.githubusercontent.com/16090626/75725280-5f7efc80-5c9d-11ea-8fe6-0763dd1c92e9.jpeg)
 # Welcome to CoffeeTown!   
-Rails project 
+  CoffeeTown is a ficitional exercise in creating a large-scale, E-commerce solution using Rails and Postgres.  The original project and exercise is called Monster Shop 
 
+  CoffeeTown is hosted - [Here](https://protected-stream-03620.herokuapp.com)
 ## Learning Goals
 
 ### Rails
