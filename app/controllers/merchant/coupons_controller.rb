@@ -40,9 +40,11 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def update
+
     coupon = Coupon.find(params[:id])
     coupon.update(coupon_params)
     redirect_to merchant_coupons_path
+
   end
 
   private
